@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details</title>
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .slider {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .slider img {
+      width: 100px;
+      height: 150px;
+      object-fit: contain;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .info p {
+      margin: 6px 0;
+    }
+
+    .info strong {
+      display: inline-block;
+      width: 150px;
+    }
+
+    .footer-info {
+      margin-top: 30px;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 id="title"></h2>
+  <div class="slider" id="imageSlider"></div>
+
+  <div class="details">
+    <p><strong>Description:</strong> <span id="description"></span></p>
+    <p><strong>Brand:</strong> <span id="brand"></span></p>
+    <p><strong>Category:</strong> <span id="category"></span></p>
+    <p><strong>Price:</strong> ₹<span id="price"></span></p>
+    <p><strong>Discount:</strong> <span id="discountPercentage"></span>%</p>
+    <p><strong>Stock:</strong> <span id="stock"></span></p>
+    <p><strong>Rating:</strong> <span id="rating"></span></p>
+    <p><strong>SKU:</strong> BEA-ESS-ESS-001</p>
+    <p><strong>Weight:</strong> 4g</p>
+    <p><strong>Dimensions:</strong> 15.14 x 13.08 x 22.99 cm</p>
+    <p><strong>Warranty:</strong> 1 week warranty</p>
+    <p><strong>Shipping Info:</strong> Ships in 3-5 business days</p>
+    <p><strong>Availability:</strong> In Stock</p>
+    <p><strong>Return Policy:</strong> No return policy</p>
+    <p><strong>Minimum Order:</strong> 48</p>
+  </div>
+
+    <div class="footer-info">
+      <p><strong>Created At:</strong> 2025-04-30T09:41:02.053Z</p>
+      <p><strong>Updated At:</strong> 2025-04-30T09:41:02.053Z</p>
+      <p><strong>Barcode:</strong> <span id="barcode"></span></p>
+      <div class="qr-code">
+        <img id="qrImage" src="" alt="QR Code">
+      </div>
+    </div>
+
+  <div class="reviews" id="reviews">
+    <h3>Customer Reviews</h3>
+    <!-- Reviews will be appended here -->
+  </div>
+
+  <script>
+    const product = JSON.parse(localStorage.getItem("selectedProduct"));
+
+    if (!product) {
+      document.body.innerHTML = "<p>No product selected.</p>";
+    } else {
+      document.getElementById("title").innerText = product.title;
+      document.getElementById("description").innerText = product.description;
+      document.getElementById("brand").innerText = product.brand;
+      document.getElementById("category").innerText = product.category;
+      document.getElementById("price").innerText = product.price;
+      document.getElementById("discountPercentage").innerText = product.discountPercentage;
+      document.getElementById("stock").innerText = product.stock;
+      document.getElementById("rating").innerText = product.rating;
+
+      // Barcode and QR Code
+      const barcode = product.id ? `PROD-${product.id}` : '5784719087687';
+      document.getElementById("barcode").innerText = barcode;
+      document.getElementById("qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?data=${barcode}&size=100x100`;
+
+      // Image slider with repeated thumbnail
+      const slider = document.getElementById("imageSlider");
+      for (let i = 0; i < 5; i++) {
+        const img = document.createElement("img");
+        img.src = product.thumbnail;
+        img.alt = product.title;
+        slider.appendChild(img);
+      }
+
+      // Dummy Reviews (Replace with actual if available)
+      const reviews = [
+        { name: "Anjali", comment: "Loved it! Very smooth and long-lasting." },
+        { name: "Rahul", comment: "Good quality, but expected a bit more volume." },
+        { name: "Meera", comment: "Affordable and does the job well." }
+      ];
+
+      const reviewDiv = document.getElementById("reviews");
+      reviews.forEach((rev) => {
+        const div = document.createElement("div");
+        div.className = "review";
+        div.innerHTML = `<p><strong>${rev.name}</strong></p><p>${rev.comment}</p>`;
+        reviewDiv.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
